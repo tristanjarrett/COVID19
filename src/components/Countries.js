@@ -1,5 +1,7 @@
 import React from 'react';
-import { ActivityIndicator, View, Text, FlatList, Button } from 'react-native';
+import { ActivityIndicator, View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 class Countries extends React.Component {
     constructor(props) {
@@ -31,14 +33,18 @@ class Countries extends React.Component {
                 data={data.Countries}
                 keyExtractor={({ ID }, index) => ID}
                 renderItem={({ item }) => (
-                <Button
-                    title={item.Country}
-                    onPress={() => {
-                    this.props.navigation.navigate('Country', {
-                        itemData: item
-                    });
-                    }}
-                />
+                    <View style={styles.listRow}>
+                        <TouchableOpacity
+                            style={styles.listItem}
+                            onPress={() => {
+                                this.props.navigation.navigate('Country', {
+                                    itemData: item
+                                });
+                            }}>
+                            <Text>{item.Country}</Text>
+                            <FontAwesomeIcon icon={ faChevronRight } />
+                        </TouchableOpacity>
+                    </View>
                 )}
             />
             )}
@@ -46,5 +52,19 @@ class Countries extends React.Component {
         );
     }
 };
+
+const styles = StyleSheet.create({
+    listRow: {
+        borderBottomColor: '#e1e1e1',
+        borderBottomWidth: 1
+    },
+    listItem: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 15,
+        paddingHorizontal: 10
+    }
+})
 
 export default Countries;
