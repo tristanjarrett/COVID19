@@ -1,82 +1,61 @@
-import React from 'react';
-import { ActivityIndicator, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import * as React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 function largeNumber(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
-class GlobalStats extends React.Component {
+class Country extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
-            isLoading: true
+            data: this.props.data
         };
     }
 
-    componentDidMount() {
-        fetch('https://api.covid19api.com/summary')
-        .then((response) => response.json())
-        .then((json) => {
-            this.setState({ data: json });
-        })
-        .catch((error) => console.error(error))
-        .finally(() => {
-            this.setState({ isLoading: false });
-        });
-    }
-
     render() {
-        const { data, isLoading } = this.state;
+        const { data } = this.state;
         return (
             <View style={ styles.container }>
-                {isLoading ? <ActivityIndicator/> : (
+                
                     <View style={ styles.infoSection }>
 
                         <View style={ styles.infoItem }>
                             <View style={ styles.infoItemCol }>
                                 <Text style={ styles.inforItemTitle }>New Confirmed</Text>
-                                <Text style={ styles.infoItemValue }>{largeNumber(data.Global.NewConfirmed)}</Text>
+                                <Text style={ styles.infoItemValue }>{largeNumber(data.NewConfirmed)}</Text>
                             </View>
                             <View style={ styles.infoItemCol }>
                                 <Text style={ styles.inforItemTitle }>Total Confirmed</Text>
-                                <Text style={ styles.infoItemValue }>{largeNumber(data.Global.TotalConfirmed)}</Text>
+                                <Text style={ styles.infoItemValue }>{largeNumber(data.TotalConfirmed)}</Text>
                             </View>
                         </View>
 
                         <View style={ styles.infoItem }>
                             <View style={ styles.infoItemCol }>
                                 <Text style={ styles.inforItemTitle }>New Deaths</Text>
-                                <Text style={ [styles.infoItemValue, styles.fontBad] }>{largeNumber(data.Global.NewDeaths)}</Text>
+                                <Text style={ [styles.infoItemValue, styles.fontBad] }>{largeNumber(data.NewDeaths)}</Text>
                             </View>
                             <View style={ styles.infoItemCol }>
                                 <Text style={ styles.inforItemTitle }>Total Deaths</Text>
-                                <Text style={ [styles.infoItemValue, styles.fontBad] }>{largeNumber(data.Global.TotalDeaths)}</Text>
+                                <Text style={ [styles.infoItemValue, styles.fontBad] }>{largeNumber(data.TotalDeaths)}</Text>
                             </View>
                         </View>
 
                         <View style={ styles.infoItem }>
                             <View style={ styles.infoItemCol }>
                                 <Text style={ styles.inforItemTitle }>New Recovered</Text>
-                                <Text style={ [styles.infoItemValue, styles.fontGood] }>{largeNumber(data.Global.NewRecovered)}</Text>
+                                <Text style={ [styles.infoItemValue, styles.fontGood] }>{largeNumber(data.NewRecovered)}</Text>
                             </View>
                             <View style={ styles.infoItemCol }>
                                 <Text style={ styles.inforItemTitle }>Total Recovered</Text>
-                                <Text style={ [styles.infoItemValue, styles.fontGood] }>{largeNumber(data.Global.TotalRecovered)}</Text>
+                                <Text style={ [styles.infoItemValue, styles.fontGood] }>{largeNumber(data.TotalRecovered)}</Text>
                             </View>
                         </View>
 
                     </View>
-                )}
-                <View style={ styles.navSection }>
-                    <TouchableOpacity
-                        style={ styles.button }
-                        onPress={() => this.props.navigation.navigate('Countries')}
-                    >
-                        <Text style={ styles.buttonText }>Search by Country</Text>
-                    </TouchableOpacity>
-                </View>
+                    
             </View>
         );
     }
@@ -112,21 +91,7 @@ const styles = StyleSheet.create({
     },
     fontBad: {
         color: '#ff0000'
-    },
-    navSection: {
-        padding: 30
-    },
-    button: {
-        alignItems: "center",
-        backgroundColor: "#5b92eb",
-        padding: 15,
-        borderRadius: 5
-    },
-    buttonText: {
-        color: "#ffffff",
-        fontSize: 18,
-        fontWeight: 'bold'
     }
 });
 
-export default GlobalStats;
+export default Country;
