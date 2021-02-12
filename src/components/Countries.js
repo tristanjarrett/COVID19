@@ -50,7 +50,8 @@ class Countries extends React.Component {
                             style={styles.listItem}
                             onPress={() => {
                                 this.props.navigation.navigate('Country', {
-                                    itemData: item
+                                    itemData: item,
+                                    countryName: item.Country,
                                 });
                             }}>
                             <Text style={ styles.title }>{item.Country}</Text>

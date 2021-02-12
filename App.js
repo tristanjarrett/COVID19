@@ -20,21 +20,23 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Dashboard">
+      <Stack.Navigator initialRouteName="Global Statistics" screenOptions={navTheme}>
         <Stack.Screen
           name="Global Statistics"
           component={GlobalStatsScreen}
-          options={{ title: 'Global Statistics' }, navTheme}
+          options={{ title: 'Global Statistics' }}
         />
         <Stack.Screen
           name="Countries"
           component={CountriesScreen}
-          options={{ title: "Countries" }, navTheme}
+          options={{ title: "Countries" }}
         />
         <Stack.Screen
           name="Country"
           component={CountryScreen}
-          options={{ title: "Country" }, navTheme}
+          options={
+            ({ route }) => ({ title: route.params.countryName })
+          }
         />
       </Stack.Navigator>
     </NavigationContainer>
