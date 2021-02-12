@@ -11,7 +11,7 @@ const navTheme = {
   },
   headerTintColor: '#fff',
   headerTitleStyle: {
-    fontWeight: 'bold',
+    fontWeight: 'normal'
   }
 }
 
@@ -22,7 +22,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Dashboard">
         <Stack.Screen
-          name="Dashboard"
+          name="Global Statistics"
           component={GlobalStatsScreen}
           options={{ title: 'Global Statistics' }, navTheme}
         />

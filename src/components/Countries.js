@@ -41,8 +41,8 @@ class Countries extends React.Component {
                                     itemData: item
                                 });
                             }}>
-                            <Text>{item.Country}</Text>
-                            <FontAwesomeIcon icon={ faChevronRight } />
+                            <Text style={ styles.title }>{item.Country}</Text>
+                            <FontAwesomeIcon icon={ faChevronRight } style={ styles.icon } />
                         </TouchableOpacity>
                     </View>
                 )}
@@ -62,9 +62,16 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         paddingVertical: 15,
         paddingHorizontal: 10
+    },
+    title: {
+        fontSize: 18
+    },
+    icon: {
+        color: '#a9a9a9'
     }
-})
+});
 
 export default Countries;

@@ -1,7 +1,12 @@
 import React from 'react';
-import { ActivityIndicator, View, Text, FlatList, Button } from 'react-native';
+import { ActivityIndicator, View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+
+function largeNumber(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
 
 class GlobalStats extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -25,40 +30,107 @@ class GlobalStats extends React.Component {
     render() {
         const { data, isLoading } = this.state;
         return (
-        <View>
-            {isLoading ? <ActivityIndicator/> : (
-                <View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text>New Confirmed: {data.Global.NewConfirmed}</Text>
-                        <Text>Total Confirmed: {data.Global.TotalConfirmed}</Text>
+            <View style={ styles.container }>
+                {isLoading ? <ActivityIndicator/> : (
+                    <View style={ styles.infoSection }>
+
+                        <View style={ styles.infoItem }>
+                            <View style={ styles.infoItemCol }>
+                                <Text style={ styles.inforItemTitle }>New Confirmed</Text>
+                                <Text style={ styles.infoItemValue }>{largeNumber(data.Global.NewConfirmed)}</Text>
+                            </View>
+                            <View style={ styles.infoItemCol }>
+                                <Text style={ styles.inforItemTitle }>Total Confirmed</Text>
+                                <Text style={ styles.infoItemValue }>{largeNumber(data.Global.TotalConfirmed)}</Text>
+                            </View>
+                        </View>
+
+                        <View style={ styles.infoItem }>
+                            <View style={ styles.infoItemCol }>
+                                <Text style={ styles.inforItemTitle }>New Deaths</Text>
+                                <Text style={ [styles.infoItemValue, styles.fontBad] }>{largeNumber(data.Global.NewDeaths)}</Text>
+                            </View>
+                            <View style={ styles.infoItemCol }>
+                                <Text style={ styles.inforItemTitle }>Total Deaths</Text>
+                                <Text style={ [styles.infoItemValue, styles.fontBad] }>{largeNumber(data.Global.TotalDeaths)}</Text>
+                            </View>
+                        </View>
+
+                        <View style={ styles.infoItem }>
+                            <View style={ styles.infoItemCol }>
+                                <Text style={ styles.inforItemTitle }>New Recovered</Text>
+                                <Text style={ [styles.infoItemValue, styles.fontGood] }>{largeNumber(data.Global.NewRecovered)}</Text>
+                            </View>
+                            <View style={ styles.infoItemCol }>
+                                <Text style={ styles.inforItemTitle }>Total Recovered</Text>
+                                <Text style={ [styles.infoItemValue, styles.fontGood] }>{largeNumber(data.Global.TotalRecovered)}</Text>
+                            </View>
+                        </View>
+
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text>New Deaths: {data.Global.NewDeaths}</Text>
-                        <Text>Total Deaths: {data.Global.TotalDeaths}</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text>New Recovered: {data.Global.NewRecovered}</Text>
-                        <Text>Total Recovered: {data.Global.TotalRecovered}</Text>
-                    </View>
+                )}
+                <View style={ styles.navSection }>
+                    {/* <Button
+                        title="Search by Country"
+                        onPress={() => this.props.navigation.navigate('Countries')}
+                    /> */}
+                    <TouchableOpacity
+                        style={ styles.button }
+                        onPress={() => this.props.navigation.navigate('Countries')}
+                    >
+                        <Text style={ styles.buttonText }>Search by Country</Text>
+                    </TouchableOpacity>
                 </View>
-                // <FlatList
-                //     data={data.Countries}
-                //     keyExtractor={({ ID }, index) => ID}
-                //     renderItem={({ item }) => (
-                //     <Button
-                //         title={item.Country}
-                //         onPress={() => {
-                //         this.props.navigation.navigate('Country', {
-                //             itemData: item
-                //         });
-                //         }}
-                //     />
-                //     )}
-                // />
-            )}
-        </View>
+            </View>
         );
     }
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    infoSection: {
+        padding: 20
+    },
+    infoItem: {
+        flexDirection: 'row',
+        padding: 15,
+        borderWidth: 1,
+        borderColor: '#e1e1e1',
+        marginBottom: 10
+    },
+    infoItemCol: {
+        flexDirection: 'column',
+        flex: 1
+    },
+    inforItemTitle: {
+        fontSize: 16
+    },
+    infoItemValue: {
+        fontSize: 24,
+        fontWeight: 'bold'
+    },
+    fontGood: {
+        color: '#20a827'
+    },
+    fontBad: {
+        color: '#ff0000'
+    },
+    navSection: {
+        padding: 30
+    },
+    button: {
+        alignItems: "center",
+        backgroundColor: "#5b92eb",
+        padding: 15,
+        borderRadius: 5
+    },
+    buttonText: {
+        color: "#ffffff",
+        fontSize: 18,
+        fontWeight: 'bold'
+    }
+});
 
 export default GlobalStats;
