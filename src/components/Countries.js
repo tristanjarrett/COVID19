@@ -1,14 +1,15 @@
 import React from 'react';
-import { ActivityIndicator, View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { ActivityIndicator, View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput, SafeAreaView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 class Countries extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
-            isLoading: true
+            isLoading: true,
+            searchString: ""
         };
     }
 
@@ -27,7 +28,18 @@ class Countries extends React.Component {
     render() {
         const { data, isLoading } = this.state;
         return (
-        <View>
+            <SafeAreaView style={styles.container}>
+                <View style={ styles.searchBackground }>
+                    <View style={styles.searchSection}>
+                        <FontAwesomeIcon icon={ faSearch } style={ styles.searchIcon } />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Search"
+                            onChangeText={(searchString) => {this.setState({searchString}, console.log(searchString))}}
+                            underlineColorAndroid="transparent"
+                        />
+                    </View>
+                </View>
             {isLoading ? <ActivityIndicator/> : (
             <FlatList
                 data={data.Countries}
@@ -48,12 +60,37 @@ class Countries extends React.Component {
                 )}
             />
             )}
-        </View>
+        </SafeAreaView>
         );
     }
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    searchBackground: {
+        padding: 10,
+        backgroundColor: '#e1e1e1'
+    },
+    searchSection: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#b9b9b9'
+    },
+    searchIcon: {
+        paddingHorizontal: 20,
+        color: '#a9a9a9'
+    },
+    input: {
+        flex: 1,
+        fontSize: 18,
+        color: '#424242',
+    },
     listRow: {
         borderBottomColor: '#e1e1e1',
         borderBottomWidth: 1

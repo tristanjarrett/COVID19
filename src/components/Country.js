@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 
 function largeNumber(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -17,46 +17,46 @@ class Country extends React.Component {
     render() {
         const { data } = this.state;
         return (
-            <View style={ styles.container }>
+            <SafeAreaView style={ styles.container }>
                 
-                    <View style={ styles.infoSection }>
+                <View style={ styles.infoSection }>
 
-                        <View style={ styles.infoItem }>
-                            <View style={ styles.infoItemCol }>
-                                <Text style={ styles.inforItemTitle }>New Confirmed</Text>
-                                <Text style={ styles.infoItemValue }>{largeNumber(data.NewConfirmed)}</Text>
-                            </View>
-                            <View style={ styles.infoItemCol }>
-                                <Text style={ styles.inforItemTitle }>Total Confirmed</Text>
-                                <Text style={ styles.infoItemValue }>{largeNumber(data.TotalConfirmed)}</Text>
-                            </View>
+                    <View style={ styles.infoItem }>
+                        <View style={ styles.infoItemCol }>
+                            <Text style={ styles.inforItemTitle }>New Confirmed</Text>
+                            <Text style={ styles.infoItemValue }>{largeNumber(data.NewConfirmed)}</Text>
                         </View>
-
-                        <View style={ styles.infoItem }>
-                            <View style={ styles.infoItemCol }>
-                                <Text style={ styles.inforItemTitle }>New Deaths</Text>
-                                <Text style={ [styles.infoItemValue, styles.fontBad] }>{largeNumber(data.NewDeaths)}</Text>
-                            </View>
-                            <View style={ styles.infoItemCol }>
-                                <Text style={ styles.inforItemTitle }>Total Deaths</Text>
-                                <Text style={ [styles.infoItemValue, styles.fontBad] }>{largeNumber(data.TotalDeaths)}</Text>
-                            </View>
+                        <View style={ styles.infoItemCol }>
+                            <Text style={ styles.inforItemTitle }>Total Confirmed</Text>
+                            <Text style={ styles.infoItemValue }>{largeNumber(data.TotalConfirmed)}</Text>
                         </View>
-
-                        <View style={ styles.infoItem }>
-                            <View style={ styles.infoItemCol }>
-                                <Text style={ styles.inforItemTitle }>New Recovered</Text>
-                                <Text style={ [styles.infoItemValue, styles.fontGood] }>{largeNumber(data.NewRecovered)}</Text>
-                            </View>
-                            <View style={ styles.infoItemCol }>
-                                <Text style={ styles.inforItemTitle }>Total Recovered</Text>
-                                <Text style={ [styles.infoItemValue, styles.fontGood] }>{largeNumber(data.TotalRecovered)}</Text>
-                            </View>
-                        </View>
-
                     </View>
+
+                    <View style={ styles.infoItem }>
+                        <View style={ styles.infoItemCol }>
+                            <Text style={ styles.inforItemTitle }>New Deaths</Text>
+                            <Text style={ [styles.infoItemValue, styles.fontBad] }>{largeNumber(data.NewDeaths)}</Text>
+                        </View>
+                        <View style={ styles.infoItemCol }>
+                            <Text style={ styles.inforItemTitle }>Total Deaths</Text>
+                            <Text style={ [styles.infoItemValue, styles.fontBad] }>{largeNumber(data.TotalDeaths)}</Text>
+                        </View>
+                    </View>
+
+                    <View style={ styles.infoItem }>
+                        <View style={ styles.infoItemCol }>
+                            <Text style={ styles.inforItemTitle }>New Recovered</Text>
+                            <Text style={ [styles.infoItemValue, styles.fontGood] }>{largeNumber(data.NewRecovered)}</Text>
+                        </View>
+                        <View style={ styles.infoItemCol }>
+                            <Text style={ styles.inforItemTitle }>Total Recovered</Text>
+                            <Text style={ [styles.infoItemValue, styles.fontGood] }>{largeNumber(data.TotalRecovered)}</Text>
+                        </View>
+                    </View>
+
+                </View>
                     
-            </View>
+            </SafeAreaView>
         );
     }
 };

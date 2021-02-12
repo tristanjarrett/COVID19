@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 
 function largeNumber(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -30,7 +30,7 @@ class GlobalStats extends React.Component {
     render() {
         const { data, isLoading } = this.state;
         return (
-            <View style={ styles.container }>
+            <SafeAreaView style={ styles.container }>
                 {isLoading ? <ActivityIndicator/> : (
                     <View style={ styles.infoSection }>
 
@@ -77,7 +77,7 @@ class GlobalStats extends React.Component {
                         <Text style={ styles.buttonText }>Search by Country</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 };
