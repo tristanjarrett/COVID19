@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 18,
         color: '#424242',
+        paddingVertical: 10
     },
     listRow: {
         borderBottomColor: '#e1e1e1',
