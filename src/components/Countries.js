@@ -31,7 +31,6 @@ class Countries extends React.Component {
 
     filterItem = event => {
         var query = event.nativeEvent.text;
-        console.log("query:", query)
         this.setState({
           query: query
         });
@@ -41,11 +40,8 @@ class Countries extends React.Component {
           });
         } else {
           var json = this.state.dataBackup;
-          console.log("json:", json)
           query = query.toLowerCase();
-          console.log("query 2:", query)
           json = json.filter(result => result.Country.toLowerCase().match(query));
-          console.log("json 2:", json)
     
           this.setState({
             dataSource: json,
