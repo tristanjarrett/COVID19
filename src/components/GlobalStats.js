@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         color: '#ff0000'
     },
     navSection: {
-        padding: 30
+        paddingHorizontal: 30
     },
     button: {
         alignItems: "center",
