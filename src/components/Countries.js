@@ -7,9 +7,10 @@ class Countries extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
             isLoading: true,
-            searchString: ""
+            query: null,
+            dataSource: [],
+            dataBackup: []
         };
     }
 
@@ -17,7 +18,10 @@ class Countries extends React.Component {
         fetch('https://api.covid19api.com/summary')
         .then((response) => response.json())
         .then((json) => {
-            this.setState({ data: json });
+            this.setState({
+                dataBackup: json.Countries,
+                dataSource: json.Countries,
+              });
         })
         .catch((error) => console.error(error))
         .finally(() => {
@@ -25,8 +29,32 @@ class Countries extends React.Component {
         });
     }
 
+    filterItem = event => {
+        var query = event.nativeEvent.text;
+        console.log("query:", query)
+        this.setState({
+          query: query
+        });
+        if (query == '') {
+          this.setState({
+            dataSource: this.state.dataBackup
+          });
+        } else {
+          var json = this.state.dataBackup;
+          console.log("json:", json)
+          query = query.toLowerCase();
+          console.log("query 2:", query)
+          json = json.filter(result => result.Country.toLowerCase().match(query));
+          console.log("json 2:", json)
+    
+          this.setState({
+            dataSource: json,
+          });
+        }
+      };
+
     render() {
-        const { data, isLoading } = this.state;
+        const { dataSource, isLoading } = this.state;
         return (
             <SafeAreaView style={styles.container}>
                 <View style={ styles.searchBackground }>
@@ -35,14 +63,15 @@ class Countries extends React.Component {
                         <TextInput
                             style={styles.input}
                             placeholder="Search"
-                            onChangeText={(searchString) => {this.setState({searchString}, console.log(searchString))}}
                             underlineColorAndroid="transparent"
+                            value={this.state.query}
+                            onChange={this.filterItem.bind(this)}
                         />
                     </View>
                 </View>
             {isLoading ? <ActivityIndicator/> : (
             <FlatList
-                data={data.Countries}
+                data={dataSource}
                 keyExtractor={({ ID }, index) => ID}
                 renderItem={({ item }) => (
                     <View style={styles.listRow}>
