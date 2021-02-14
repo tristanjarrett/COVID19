@@ -1,6 +1,8 @@
 import React from 'react';
 import { ActivityIndicator, View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 
+import BarChart from '../components/BarChart';
+
 function largeNumber(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
@@ -11,7 +13,8 @@ class GlobalStats extends React.Component {
         super(props);
         this.state = {
             data: [],
-            isLoading: true
+            isLoading: true,
+            barData: []
         };
     }
 
@@ -19,7 +22,14 @@ class GlobalStats extends React.Component {
         fetch('https://api.covid19api.com/summary')
         .then((response) => response.json())
         .then((json) => {
-            this.setState({ data: json });
+            this.setState({ 
+                data: json,
+                barData: [
+                    { label: 'New Confirmed', value: parseInt(json.Global.NewConfirmed), color: 'orange' },
+                    { label: 'New Deaths', value: parseInt(json.Global.NewDeaths), color: 'red' },
+                    { label: 'New Recovered', value: parseInt(json.Global.NewRecovered), color: 'green' }
+                  ]
+            });
         })
         .catch((error) => console.error(error))
         .finally(() => {
@@ -28,9 +38,20 @@ class GlobalStats extends React.Component {
     }
 
     render() {
-        const { data, isLoading } = this.state;
+        const { data, isLoading, barData } = this.state;
+
         return (
             <SafeAreaView style={ styles.container }>
+
+                {isLoading ? <ActivityIndicator/> : (
+                    <View style={styles.chartSection}>
+                        <Text style={styles.chartTitle}>Latest New Data</Text>
+                        <View style={styles.chart}>
+                            <BarChart data={barData} round={100} unit="€"/>
+                        </View>
+                    </View>
+                )}
+
                 {isLoading ? <ActivityIndicator/> : (
                     <View style={ styles.infoSection }>
 
@@ -85,6 +106,16 @@ class GlobalStats extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    chartSection: {
+        padding: 20
+    },
+    chartTitle: {
+        fontSize: 16
+    },
+    chart: {
+        alignItems: 'center',
+        paddingTop: 20
     },
     infoSection: {
         padding: 20

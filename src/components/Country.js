@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 
+import BarChart from '../components/BarChart';
+
 function largeNumber(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
@@ -10,14 +12,26 @@ class Country extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.data
+            data: this.props.data,
+            barData: [
+                { label: 'New Confirmed', value: parseInt(this.props.data.NewConfirmed), color: 'orange' },
+                { label: 'New Deaths', value: parseInt(this.props.data.NewDeaths), color: 'red' },
+                { label: 'New Recovered', value: parseInt(this.props.data.NewRecovered), color: 'green' }
+              ]
         };
     }
 
     render() {
-        const { data } = this.state;
+        const { data, barData } = this.state;
         return (
             <SafeAreaView style={ styles.container }>
+
+                <View style={styles.chartSection}>
+                    <Text style={styles.chartTitle}>Latest New Data</Text>
+                    <View style={styles.chart}>
+                        <BarChart data={barData} round={100} unit="€"/>
+                    </View>
+                </View>
                 
                 <View style={ styles.infoSection }>
 
@@ -64,6 +78,16 @@ class Country extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    chartSection: {
+        padding: 20
+    },
+    chartTitle: {
+        fontSize: 16
+    },
+    chart: {
+        alignItems: 'center',
+        paddingTop: 20
     },
     infoSection: {
         padding: 20
